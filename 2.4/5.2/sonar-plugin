@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+if [[ $# -eq 0 ]] ; then
+    echo 'usage: sonar-plugin [PLUGIN URL]'
+    exit 1
+fi
+
+(cd $SONARQUBE_HOME/extensions/plugins; curl -OL $@)
+
+
