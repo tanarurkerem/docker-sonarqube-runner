@@ -1,0 +1,25 @@
+sonar:
+  build: sonar
+  ports:
+    - "9000:9000"
+  links:
+    - db
+  environment:
+    - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+  volumes:
+    - ./code:/opt/code
+db:
+  image: postgres
+  environment:
+    - POSTGRES_USER=sonar
+    - POSTGRES_PASSWORD=sonar
+cli:
+  build: sonar
+  volumes_from:
+    - sonar
+  command: /bin/bash
+  environment:
+    - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+  links:
+    - sonar
+    - db
